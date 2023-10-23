@@ -1,6 +1,6 @@
 [submodule "front/rec"]
 	path = front/rec
-	url = https://github.com/ak5bhat/Inventory-Reconciliation-Blockchain-Hyperledger-Fabric/tree/master/
+	url = ./front/rec
 [submodule "front/recon"]
 	path = front/recon
-	url = https://github.com/ak5bhat/Inventory-Reconciliation-Blockchain-Hyperledger-Fabric/tree/master/
+	url = ./front/recon
