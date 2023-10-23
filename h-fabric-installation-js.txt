@@ -1,0 +1,453 @@
+mkdir -p $HOME/js/src/github.com/ak5bhat
+cd $HOME/js/src/github.com/ak5bhat
+curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
+ls
+./install-fabric.sh -h
+
+./install-fabric.sh
+hyperledger/fabric-tools     2.4       6997a3225d8b   2 weeks ago    490MB
+hyperledger/fabric-tools     2.4.9     6997a3225d8b   2 weeks ago    490MB
+hyperledger/fabric-tools     latest    6997a3225d8b   2 weeks ago    490MB
+hyperledger/fabric-peer      2.4       b1c5352410a0   2 weeks ago    64.2MB
+hyperledger/fabric-peer      2.4.9     b1c5352410a0   2 weeks ago    64.2MB
+hyperledger/fabric-peer      latest    b1c5352410a0   2 weeks ago    64.2MB
+hyperledger/fabric-orderer   2.4       d64956fd66bb   2 weeks ago    36.7MB
+hyperledger/fabric-orderer   2.4.9     d64956fd66bb   2 weeks ago    36.7MB
+hyperledger/fabric-orderer   latest    d64956fd66bb   2 weeks ago    36.7MB
+hyperledger/fabric-ccenv     2.4       7557f03b34a9   2 weeks ago    521MB
+hyperledger/fabric-ccenv     2.4.9     7557f03b34a9   2 weeks ago    521MB
+hyperledger/fabric-ccenv     latest    7557f03b34a9   2 weeks ago    521MB
+hyperledger/fabric-baseos    2.4       0792904ee001   2 weeks ago    6.8MB
+hyperledger/fabric-baseos    2.4.9     0792904ee001   2 weeks ago    6.8MB
+hyperledger/fabric-baseos    latest    0792904ee001   2 weeks ago    6.8MB
+hyperledger/fabric-ca        1.5       93f19fa873cb   8 months ago   76.5MB
+hyperledger/fabric-ca        1.5.5     93f19fa873cb   8 months ago   76.5MB
+hyperledger/fabric-ca        latest    93f19fa873cb   8 months ago   76.5MB
+
+ls
+cd fabric-samples
+ls
+cd test-network
+ls
+
+./network.sh -h
+Using docker and docker-compose
+Usage:
+  network.sh <Mode> [Flags]
+    Modes:
+      up - Bring up Fabric orderer and peer nodes. No channel is created
+      up createChannel - Bring up fabric network with one channel
+      createChannel - Create and join a channel after the network is created
+      deployCC - Deploy a chaincode to a channel (defaults to asset-transfer-basic)
+      down - Bring down the network
+
+    Flags:
+    Used with network.sh up, network.sh createChannel:
+    -ca <use CAs> -  Use Certificate Authorities to generate network crypto material
+    -c <channel name> - Name of channel to create (defaults to "mychannel")
+    -s <dbtype> - Peer state database to deploy: goleveldb (default) or couchdb
+    -r <max retry> - CLI times out after certain number of attempts (defaults to 5)
+    -d <delay> - CLI delays for a certain number of seconds (defaults to 3)
+    -verbose - Verbose mode
+
+    Used with network.sh deployCC
+    -c <channel name> - Name of channel to deploy chaincode to
+    -ccn <name> - Chaincode name.
+    -ccl <language> - Programming language of the chaincode to deploy: go, java, javascript, typescript
+    -ccv <version>  - Chaincode version. 1.0 (default), v2, version3.x, etc
+    -ccs <sequence>  - Chaincode definition sequence. Must be an integer, 1 (default), 2, 3, etc
+    -ccp <path>  - File path to the chaincode.
+    -ccep <policy>  - (Optional) Chaincode endorsement policy using signature policy syntax. The default policy requires an endorsement from Org1 and Org2
+    -cccg <collection-config>  - (Optional) File path to private data collections configuration file
+    -cci <fcn name>  - (Optional) Name of chaincode initialization function. When a function is provided, the execution of init will be requested and the function will be invoked.
+
+    -h - Print this message
+
+ Possible Mode and flag combinations
+   up -ca -r -d -s -verbose
+   up createChannel -ca -c -r -d -s -verbose
+   createChannel -c -r -d -verbose
+   deployCC -ccn -ccl -ccv -ccs -ccp -cci -r -d -verbose
+
+ Examples:
+   network.sh up createChannel -ca -c mychannel -s couchdb
+   network.sh createChannel -c channelName
+   network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript
+   network.sh deployCC -ccn mychaincode -ccp ./user/mychaincode -ccv 1 -ccl javascript
+
+
+when you restart system,
+cd $HOME/js/src/github.com/ak5bhat
+cd fabric-samples/test-network
+./network.sh down
+
+./network.sh up -ca -s couchdb
+Using docker and docker-compose
+Starting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'couchdb' with crypto from 'Certificate Authorities'
+LOCAL_VERSION=2.4.7
+DOCKER_IMAGE_VERSION=2.4.7
+CA_LOCAL_VERSION=1.5.5
+CA_DOCKER_IMAGE_VERSION=1.5.5
+Generating certificates using Fabric CA
+Creating network "fabric_test" with the default driver
+Creating ca_org2    ... done
+Creating ca_orderer ... done
+Creating ca_org1    ... done
+Creating Org1 Identities
+Enrolling the CA admin
++ fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca-org1 --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:23 [INFO] Created a default configuration file at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:23 [INFO] TLS Enabled
+2023/03/07 11:21:23 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:23 [INFO] encoded CSR
+2023/03/07 11:21:24 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:24 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+2023/03/07 11:21:24 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:24 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/msp/IssuerRevocationPublicKey
+Registering peer0
++ fabric-ca-client register --caname ca-org1 --id.name peer0 --id.secret peer0pw --id.type peer --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] TLS Enabled
+Password: peer0pw
+Registering user
++ fabric-ca-client register --caname ca-org1 --id.name user1 --id.secret user1pw --id.type client --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] TLS Enabled
+Password: user1pw
+Registering the org admin
++ fabric-ca-client register --caname ca-org1 --id.name org1admin --id.secret org1adminpw --id.type admin --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] TLS Enabled
+Password: org1adminpw
+Generating the peer0 msp
++ fabric-ca-client enroll -u https://peer0:peer0pw@localhost:7054 --caname ca-org1 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp --csr.hosts peer0.org1.example.com --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:24 [INFO] encoded CSR
+2023/03/07 11:21:24 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:24 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+2023/03/07 11:21:24 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:24 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/IssuerRevocationPublicKey
+Generating the peer0-tls certificates
++ fabric-ca-client enroll -u https://peer0:peer0pw@localhost:7054 --caname ca-org1 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls --enrollment.profile tls --csr.hosts peer0.org1.example.com --csr.hosts localhost --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:24 [INFO] encoded CSR
+2023/03/07 11:21:24 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/signcerts/cert.pem
+2023/03/07 11:21:24 [INFO] Stored TLS root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/tlscacerts/tls-localhost-7054-ca-org1.pem
+2023/03/07 11:21:24 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/IssuerPublicKey
+2023/03/07 11:21:24 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/IssuerRevocationPublicKey
+Generating the user msp
++ fabric-ca-client enroll -u https://user1:user1pw@localhost:7054 --caname ca-org1 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:24 [INFO] TLS Enabled
+2023/03/07 11:21:24 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:24 [INFO] encoded CSR
+2023/03/07 11:21:25 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:25 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+2023/03/07 11:21:25 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:25 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/IssuerRevocationPublicKey
+Generating the org admin msp
++ fabric-ca-client enroll -u https://org1admin:org1adminpw@localhost:7054 --caname ca-org1 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org1/ca-cert.pem
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:25 [INFO] encoded CSR
+2023/03/07 11:21:25 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:25 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/cacerts/localhost-7054-ca-org1.pem
+2023/03/07 11:21:25 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:25 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/IssuerRevocationPublicKey
+Creating Org2 Identities
+Enrolling the CA admin
++ fabric-ca-client enroll -u https://admin:adminpw@localhost:8054 --caname ca-org2 --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:25 [INFO] Created a default configuration file at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:25 [INFO] encoded CSR
+2023/03/07 11:21:25 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:25 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
+2023/03/07 11:21:25 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:25 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/msp/IssuerRevocationPublicKey
+Registering peer0
++ fabric-ca-client register --caname ca-org2 --id.name peer0 --id.secret peer0pw --id.type peer --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:25 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] TLS Enabled
+Password: peer0pw
+Registering user
++ fabric-ca-client register --caname ca-org2 --id.name user1 --id.secret user1pw --id.type client --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:25 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] TLS Enabled
+Password: user1pw
+Registering the org admin
++ fabric-ca-client register --caname ca-org2 --id.name org2admin --id.secret org2adminpw --id.type admin --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:25 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] TLS Enabled
+Password: org2adminpw
+Generating the peer0 msp
++ fabric-ca-client enroll -u https://peer0:peer0pw@localhost:8054 --caname ca-org2 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp --csr.hosts peer0.org2.example.com --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:25 [INFO] TLS Enabled
+2023/03/07 11:21:25 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:25 [INFO] encoded CSR
+2023/03/07 11:21:26 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:26 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
+2023/03/07 11:21:26 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:26 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/IssuerRevocationPublicKey
+Generating the peer0-tls certificates
++ fabric-ca-client enroll -u https://peer0:peer0pw@localhost:8054 --caname ca-org2 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls --enrollment.profile tls --csr.hosts peer0.org2.example.com --csr.hosts localhost --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:26 [INFO] TLS Enabled
+2023/03/07 11:21:26 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:26 [INFO] encoded CSR
+2023/03/07 11:21:26 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/signcerts/cert.pem
+2023/03/07 11:21:26 [INFO] Stored TLS root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/tlscacerts/tls-localhost-8054-ca-org2.pem
+2023/03/07 11:21:26 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/IssuerPublicKey
+2023/03/07 11:21:26 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/IssuerRevocationPublicKey
+Generating the user msp
++ fabric-ca-client enroll -u https://user1:user1pw@localhost:8054 --caname ca-org2 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:26 [INFO] TLS Enabled
+2023/03/07 11:21:26 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:26 [INFO] encoded CSR
+2023/03/07 11:21:26 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:26 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
+2023/03/07 11:21:26 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:26 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/IssuerRevocationPublicKey
+Generating the org admin msp
++ fabric-ca-client enroll -u https://org2admin:org2adminpw@localhost:8054 --caname ca-org2 -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/org2/ca-cert.pem
+2023/03/07 11:21:26 [INFO] TLS Enabled
+2023/03/07 11:21:26 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:26 [INFO] encoded CSR
+2023/03/07 11:21:26 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:26 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/cacerts/localhost-8054-ca-org2.pem
+2023/03/07 11:21:26 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:26 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/IssuerRevocationPublicKey
+Creating Orderer Org Identities
+Enrolling the CA admin
++ fabric-ca-client enroll -u https://admin:adminpw@localhost:9054 --caname ca-orderer --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:26 [INFO] Created a default configuration file at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:26 [INFO] TLS Enabled
+2023/03/07 11:21:26 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:26 [INFO] encoded CSR
+2023/03/07 11:21:26 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:26 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/cacerts/localhost-9054-ca-orderer.pem
+2023/03/07 11:21:26 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/IssuerPublicKey
+2023/03/07 11:21:26 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/msp/IssuerRevocationPublicKey
+Registering orderer
++ fabric-ca-client register --caname ca-orderer --id.name orderer --id.secret ordererpw --id.type orderer --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:26 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:26 [INFO] TLS Enabled
+2023/03/07 11:21:26 [INFO] TLS Enabled
+Password: ordererpw
+Registering the orderer admin
++ fabric-ca-client register --caname ca-orderer --id.name ordererAdmin --id.secret ordererAdminpw --id.type admin --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:27 [INFO] Configuration file location: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/fabric-ca-client-config.yaml
+2023/03/07 11:21:27 [INFO] TLS Enabled
+2023/03/07 11:21:27 [INFO] TLS Enabled
+Password: ordererAdminpw
+Generating the orderer msp
++ fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp --csr.hosts orderer.example.com --csr.hosts localhost --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:27 [INFO] TLS Enabled
+2023/03/07 11:21:27 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:27 [INFO] encoded CSR
+2023/03/07 11:21:27 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:27 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/cacerts/localhost-9054-ca-orderer.pem
+2023/03/07 11:21:27 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/IssuerPublicKey
+2023/03/07 11:21:27 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/IssuerRevocationPublicKeyGenerating the orderer-tls certificates
++ fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls --enrollment.profile tls --csr.hosts orderer.example.com --csr.hosts localhost --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:27 [INFO] TLS Enabled
+2023/03/07 11:21:27 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:27 [INFO] encoded CSR
+2023/03/07 11:21:27 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/signcerts/cert.pem
+2023/03/07 11:21:27 [INFO] Stored TLS root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/tlscacerts/tls-localhost-9054-ca-orderer.pem
+2023/03/07 11:21:27 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/IssuerPublicKey
+2023/03/07 11:21:27 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/IssuerRevocationPublicKeyGenerating the admin msp
++ fabric-ca-client enroll -u https://ordererAdmin:ordererAdminpw@localhost:9054 --caname ca-orderer -M /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp --tls.certfiles /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/fabric-ca/ordererOrg/ca-cert.pem
+2023/03/07 11:21:27 [INFO] TLS Enabled
+2023/03/07 11:21:27 [INFO] generating key: &{A:ecdsa S:256}
+2023/03/07 11:21:27 [INFO] encoded CSR
+2023/03/07 11:21:27 [INFO] Stored client certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts/cert.pem
+2023/03/07 11:21:27 [INFO] Stored root CA certificate at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/cacerts/localhost-9054-ca-orderer.pem
+2023/03/07 11:21:27 [INFO] Stored Issuer public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/IssuerPublicKey
+2023/03/07 11:21:27 [INFO] Stored Issuer revocation public key at /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/users/Admin@example.com/msp/IssuerRevocationPublicKey
+Generating CCP files for Org1 and Org2
+Creating volume "compose_orderer.example.com" with default driver
+Creating volume "compose_peer0.org1.example.com" with default driver
+Creating volume "compose_peer0.org2.example.com" with default driver
+WARNING: Found orphan containers (ca_org2, ca_orderer, ca_org1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
+Pulling couchdb1 (couchdb:3.1.1)...
+3.1.1: Pulling from library/couchdb
+07aded7c29c6: Pull complete
+2bf6d2572e5c: Pull complete
+73c077881367: Pull complete
+20f38611f22a: Pull complete
+40b7085d2ce0: Pull complete
+8884e223396a: Pull complete
+b2be17aa7a19: Pull complete
+356eb1ff43b1: Pull complete
+6960ebdd0a7e: Pull complete
+a92df28681e5: Pull complete
+130bc089b183: Pull complete
+Digest: sha256:b422509b1648306dee1038f41756a982aefa17f986fa8ba18f6cd80e433dafdf
+Status: Downloaded newer image for couchdb:3.1.1
+Creating orderer.example.com    ... done
+Creating couchdb0               ... done
+Creating couchdb1            ... done
+Creating peer0.org2.example.com ... done
+Creating peer0.org1.example.com ... done
+Creating cli                    ... done
+CONTAINER ID   IMAGE                               COMMAND                  CREATED              STATUS                  PORTS                                                                    NAMES
+e69b6887ee53   hyperledger/fabric-tools:latest     "/bin/bash"              2 seconds ago        Up Less than a second                                                                            cli
+9d080ed44c3d   hyperledger/fabric-peer:latest      "peer node start"        4 seconds ago        Up 1 second             0.0.0.0:7051->7051/tcp, 0.0.0.0:9444->9444/tcp                           peer0.org1.example.com
+2e8309047f42   hyperledger/fabric-peer:latest      "peer node start"        4 seconds ago        Up 2 seconds            0.0.0.0:9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp                 peer0.org2.example.com
+c085239c1efd   couchdb:3.1.1                       "tini -- /docker-ent…"   22 seconds ago       Up 3 seconds            4369/tcp, 9100/tcp, 0.0.0.0:7984->5984/tcp                               couchdb1
+807e7dfb5dd0   couchdb:3.1.1                       "tini -- /docker-ent…"   22 seconds ago       Up 3 seconds            4369/tcp, 9100/tcp, 0.0.0.0:5984->5984/tcp                               couchdb0
+e83a4cc8a8af   hyperledger/fabric-orderer:latest   "orderer"                22 seconds ago       Up 3 seconds            0.0.0.0:7050->7050/tcp, 0.0.0.0:7053->7053/tcp, 0.0.0.0:9443->9443/tcp   orderer.example.com
+9c1391cfd092   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   About a minute ago   Up About a minute       0.0.0.0:7054->7054/tcp, 0.0.0.0:17054->17054/tcp                         ca_org1
+0c1962ac71cf   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   About a minute ago   Up About a minute       0.0.0.0:9054->9054/tcp, 7054/tcp, 0.0.0.0:19054->19054/tcp               ca_orderer
+99d1eaf74ba8   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   About a minute ago   Up About a minute       0.0.0.0:8054->8054/tcp, 7054/tcp, 0.0.0.0:18054->18054/tcp               ca_org2
+
+./network.sh up createChannel
+Using docker and docker-compose
+Creating channel 'mychannel'.
+If network is not up, starting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb
+Network Running Already
+Using docker and docker-compose
+Generating channel genesis block 'mychannel.block'
+/home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/../bin/configtxgen
++ configtxgen -profile TwoOrgsApplicationGenesis -outputBlock ./channel-artifacts/mychannel.block -channelID mychannel
+2023-03-07 11:27:56.975 IST 0001 INFO [common.tools.configtxgen] main -> Loading configuration
+2023-03-07 11:27:56.984 IST 0002 INFO [common.tools.configtxgen.localconfig] completeInitialization -> orderer type: etcdraft
+2023-03-07 11:27:56.984 IST 0003 INFO [common.tools.configtxgen.localconfig] completeInitialization -> Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216
+2023-03-07 11:27:56.984 IST 0004 INFO [common.tools.configtxgen.localconfig] Load -> Loaded configuration: /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/configtx/configtx.yaml
+2023-03-07 11:27:56.987 IST 0005 INFO [common.tools.configtxgen] doOutputBlock -> Generating genesis block
+2023-03-07 11:27:56.987 IST 0006 INFO [common.tools.configtxgen] doOutputBlock -> Creating application channel genesis block
+2023-03-07 11:27:56.987 IST 0007 INFO [common.tools.configtxgen] doOutputBlock -> Writing genesis block
++ res=0
+Creating channel mychannel
+Using organization 1
++ osnadmin channel join --channelID mychannel --config-block ./channel-artifacts/mychannel.block -o localhost:7053 --ca-file /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem --client-cert /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt --client-key /home/akhilesh/js/src/github.com/ak5bhat/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
++ res=0
+Status: 201
+{
+        "name": "mychannel",
+        "url": "/participation/v1/channels/mychannel",
+        "consensusRelation": "consenter",
+        "status": "active",
+        "height": 1
+}
+
+Channel 'mychannel' created
+Joining org1 peer to the channel...
+Using organization 1
++ peer channel join -b ./channel-artifacts/mychannel.block
++ res=0
+2023-03-07 11:28:03.227 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 11:28:03.945 IST 0002 INFO [channelCmd] executeJoin -> Successfully submitted proposal to join channel
+Joining org2 peer to the channel...
+Using organization 2
++ peer channel join -b ./channel-artifacts/mychannel.block
++ res=0
+2023-03-07 11:28:06.998 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 11:28:07.387 IST 0002 INFO [channelCmd] executeJoin -> Successfully submitted proposal to join channel
+Setting anchor peer for org1...
+Using organization 1
+Fetching channel config for channel mychannel
+Using organization 1
+Fetching the most recent configuration block for the channel
++ peer channel fetch config config_block.pb -o orderer.example.com:7050 --ordererTLSHostnameOverride orderer.example.com -c mychannel --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+2023-03-07 05:58:07.654 UTC 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 05:58:07.659 UTC 0002 INFO [cli.common] readBlock -> Received block: 0
+2023-03-07 05:58:07.661 UTC 0003 INFO [channelCmd] fetch -> Retrieving last config block: 0
+2023-03-07 05:58:07.664 UTC 0004 INFO [cli.common] readBlock -> Received block: 0
+Decoding config block to JSON and isolating config to Org1MSPconfig.json
++ configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
++ jq '.data.data[0].payload.data.config' config_block.json
++ jq '.channel_group.groups.Application.groups.Org1MSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "peer0.org1.example.com","port": 7051}]},"version": "0"}}' Org1MSPconfig.json
+Generating anchor peer update transaction for Org1 on channel mychannel
++ configtxlator proto_encode --input Org1MSPconfig.json --type common.Config --output original_config.pb
++ configtxlator proto_encode --input Org1MSPmodified_config.json --type common.Config --output modified_config.pb
++ configtxlator compute_update --channel_id mychannel --original original_config.pb --updated modified_config.pb --output config_update.pb
++ configtxlator proto_decode --input config_update.pb --type common.ConfigUpdate --output config_update.json
++ jq .
+++ cat config_update.json
++ echo '{"payload":{"header":{"channel_header":{"channel_id":"mychannel", "type":2}},"data":{"config_update":{' '"channel_id":' '"mychannel",' '"isolated_data":' '{},' '"read_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org1MSP":' '{' '"groups":' '{},' '"mod_policy":' '"",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '},' '"write_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org1MSP":' '{' '"groups":' '{},' '"mod_policy":' '"Admins",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"AnchorPeers":' '{' '"mod_policy":' '"Admins",' '"value":' '{' '"anchor_peers":' '[' '{' '"host":' '"peer0.org1.example.com",' '"port":' 7051 '}' ']' '},' '"version":' '"0"' '},' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"1"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '}}}}'
++ configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output Org1MSPanchors.tx
+2023-03-07 05:58:07.961 UTC 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 05:58:07.972 UTC 0002 INFO [channelCmd] update -> Successfully submitted channel update
+Anchor peer set for org 'Org1MSP' on channel 'mychannel'
+Setting anchor peer for org2...
+Using organization 2
+Fetching channel config for channel mychannel
+Using organization 2
+Fetching the most recent configuration block for the channel
++ peer channel fetch config config_block.pb -o orderer.example.com:7050 --ordererTLSHostnameOverride orderer.example.com -c mychannel --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+2023-03-07 05:58:08.230 UTC 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 05:58:08.234 UTC 0002 INFO [cli.common] readBlock -> Received block: 1
+2023-03-07 05:58:08.234 UTC 0003 INFO [channelCmd] fetch -> Retrieving last config block: 1
+2023-03-07 05:58:08.238 UTC 0004 INFO [cli.common] readBlock -> Received block: 1
+Decoding config block to JSON and isolating config to Org2MSPconfig.json
++ configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
++ jq '.data.data[0].payload.data.config' config_block.json
+Generating anchor peer update transaction for Org2 on channel mychannel
++ jq '.channel_group.groups.Application.groups.Org2MSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "peer0.org2.example.com","port": 9051}]},"version": "0"}}' Org2MSPconfig.json
++ configtxlator proto_encode --input Org2MSPconfig.json --type common.Config --output original_config.pb
++ configtxlator proto_encode --input Org2MSPmodified_config.json --type common.Config --output modified_config.pb
++ configtxlator compute_update --channel_id mychannel --original original_config.pb --updated modified_config.pb --output config_update.pb
++ configtxlator proto_decode --input config_update.pb --type common.ConfigUpdate --output config_update.json
++ jq .
+++ cat config_update.json
++ echo '{"payload":{"header":{"channel_header":{"channel_id":"mychannel", "type":2}},"data":{"config_update":{' '"channel_id":' '"mychannel",' '"isolated_data":' '{},' '"read_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org2MSP":' '{' '"groups":' '{},' '"mod_policy":' '"",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '},' '"write_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org2MSP":' '{' '"groups":' '{},' '"mod_policy":' '"Admins",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"AnchorPeers":' '{' '"mod_policy":' '"Admins",' '"value":' '{' '"anchor_peers":' '[' '{' '"host":' '"peer0.org2.example.com",' '"port":' 9051 '}' ']' '},' '"version":' '"0"' '},' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"1"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '}}}}'
++ configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output Org2MSPanchors.tx
+2023-03-07 05:58:08.469 UTC 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2023-03-07 05:58:08.478 UTC 0002 INFO [channelCmd] update -> Successfully submitted channel update
+Anchor peer set for org 'Org2MSP' on channel 'mychannel'
+Channel 'mychannel' joined
+
+docker ps
+CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS          PORTS                                                                    NAMES
+e69b6887ee53   hyperledger/fabric-tools:latest     "/bin/bash"              16 minutes ago   Up 16 minutes                                                                            cli
+9d080ed44c3d   hyperledger/fabric-peer:latest      "peer node start"        16 minutes ago   Up 16 minutes   0.0.0.0:7051->7051/tcp, 0.0.0.0:9444->9444/tcp                           peer0.org1.example.com
+2e8309047f42   hyperledger/fabric-peer:latest      "peer node start"        16 minutes ago   Up 16 minutes   0.0.0.0:9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp                 peer0.org2.example.com
+c085239c1efd   couchdb:3.1.1                       "tini -- /docker-ent…"   16 minutes ago   Up 16 minutes   4369/tcp, 9100/tcp, 0.0.0.0:7984->5984/tcp                               couchdb1
+807e7dfb5dd0   couchdb:3.1.1                       "tini -- /docker-ent…"   16 minutes ago   Up 16 minutes   4369/tcp, 9100/tcp, 0.0.0.0:5984->5984/tcp                               couchdb0
+e83a4cc8a8af   hyperledger/fabric-orderer:latest   "orderer"                16 minutes ago   Up 16 minutes   0.0.0.0:7050->7050/tcp, 0.0.0.0:7053->7053/tcp, 0.0.0.0:9443->9443/tcp   orderer.example.com
+9c1391cfd092   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   18 minutes ago   Up 17 minutes   0.0.0.0:7054->7054/tcp, 0.0.0.0:17054->17054/tcp                         ca_org1
+0c1962ac71cf   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   18 minutes ago   Up 17 minutes   0.0.0.0:9054->9054/tcp, 7054/tcp, 0.0.0.0:19054->19054/tcp               ca_orderer
+99d1eaf74ba8   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   18 minutes ago   Up 17 minutes   0.0.0.0:8054->8054/tcp, 7054/tcp, 0.0.0.0:18054->18054/tcp               ca_org2
+
+./network.sh deployCC -ccn mychaincode -ccp ~/fabric-samples/asset-transfer-basic/chaincode-javascript -ccl javascript
+
+export PATH=${PWD}/../bin:$PATH
+
+export FABRIC_CFG_PATH=$PWD/../config/
+
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+
+//peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"InitLedger","Args":[]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"CreateInventoryItem","Args":["1","1","1","1","1","1","1"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"CreateInventoryItem","Args":["6","6","6","6","6","6","6"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"GetAllInventoryItem","Args":["1","10"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"ReadInventoryItem","Args":["1"]}'
+
+
+Quick Steps:
+
+cd $HOME/js/src/github.com/ak5bhat/fabric-samples/test-network
+./network.sh down
+./network.sh up -ca -s couchdb
+./network.sh up createChannel
+./network.sh deployCC -ccn mychaincode -ccp ~/js/src/github.com/ak5bhat/chaincode -ccl javascript
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"CreateInventoryItem","Args":["1","1","1","1","1","1","1"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"CreateInventoryItem","Args":["6","6","6","6","6","6","6"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"GetAllInventoryItem","Args":["1","9"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n mychaincode --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function":"ReadInventoryItem","Args":["1"]}'
+
+docker ps
+docker logs -f <contID>
