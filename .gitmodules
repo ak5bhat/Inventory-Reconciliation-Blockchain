@@ -1,9 +1,9 @@
 [submodule "front/rec"]
 	path = front/rec
-	url = https://github.com/ak5bhat/Inventory-Reconciliation-Blockchain-Hyperledger-Fabric.git/front/rec
+	url = https://github.com/ak5bhat/rec.git
 [submodule "front/recon"]
 	path = front/recon
-	url = https://github.com/ak5bhat/Inventory-Reconciliation-Blockchain-Hyperledger-Fabric.git/front/recon
+	url = https://github.com/ak5bhat/recon.git
 [submodule "Inventory-Reconciliation-Blockchain-Hyperledger-Fabric/Header-Side-Navigation"]
 	path = Inventory-Reconciliation-Blockchain-Hyperledger-Fabric/Header-Side-Navigation
 	url = https://github.com/ak5bhat/HeaderSideNavigation.git
